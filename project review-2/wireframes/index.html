@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C.R.E.A.M. - UI Wireframes Board</title>
+  <style>
+    :root {
+      --primary: #047857; /* Civic Emerald Green */
+      --primary-dark: #064e3b;
+      --primary-light: #ecfdf5;
+      --navy: #1e293b;
+      --navy-light: #334155;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-600: #475569;
+      --gray-800: #1e293b;
+      --amber: #d97706;
+      --amber-light: #fffbeb;
+      --blue: #2563eb;
+      --blue-light: #eff6ff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #0f172a;
+      color: var(--gray-800);
+      min-height: 100vh;
+      padding: 24px;
+    }
+    /* Figma Canvas Header */
+    .figma-header {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      color: #fff;
+    }
+    .figma-header h1 { font-size: 1.25rem; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+    .figma-header .badge { background: #047857; color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 9999px; }
+    .screen-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .screen-pill {
+      background: #334155;
+      color: #cbd5e1;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .screen-pill:hover, .screen-pill.active {
+      background: #047857;
+      color: #fff;
+    }
+    
+    /* Layout Containers */
+    .board-container {
+      display: flex;
+      gap: 32px;
+      overflow-x: auto;
+      padding-bottom: 24px;
+      align-items: flex-start;
+    }
+    .board-container.single-view {
+      display: block;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    /* Wireframe Screen Frame */
+    .screen-frame {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.4), 0 8px 10px -6px rgba(0,0,0,0.3);
+      width: 440px;
+      flex-shrink: 0;
+      overflow: hidden;
+      border: 2px solid #334155;
+      display: flex;
+      flex-direction: column;
+    }
+    .board-container.single-view .screen-frame {
+      width: 100%;
+    }
+    .screen-meta {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 10px 16px;
+      font-size: 0.75rem;
+      font-family: monospace;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #334155;
+    }
+    .screen-meta span { color: #38bdf8; font-weight: bold; }
+    
+    /* Portal UI Elements */
+    .portal-nav {
+      background: #ffffff;
+      border-bottom: 1px solid var(--gray-200);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .portal-logo {
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.95rem;
+    }
+    .portal-nav-actions { display: flex; gap: 8px; align-items: center; }
+    .lang-badge {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-300);
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    .btn-auth {
+      background: var(--navy);
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: none;
+      font-weight: 600;
+    }
+    
+    .screen-body {
+      padding: 16px;
+      background: var(--gray-50);
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+      color: white;
+      padding: 20px 16px;
+      border-radius: 12px;
+      text-align: left;
+    }
+    .hero-banner h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+    .hero-banner p { font-size: 0.8rem; opacity: 0.9; margin-bottom: 12px; line-height: 1.4; }
+    .hero-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn-primary {
+      background: #ffffff;
+      color: var(--primary-dark);
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    
+    /* Metric Strip */
+    .metric-strip {
+      background: #ffffff;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      text-align: center;
+      gap: 8px;
+    }
+    .metric-item .val { font-size: 1.1rem; font-weight: 800; color: var(--primary); }
+    .metric-item .lbl { font-size: 0.65rem; color: var(--gray-600); text-transform: uppercase; font-weight: 600; margin-top: 2px; }
+    
+    /* Guide Cards */
+    .card-grid { display: flex; flex-direction: column; gap: 10px; }
+    .guide-card {
+      background: #ffffff;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .guide-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .guide-info h3 { font-size: 0.85rem; font-weight: 700; color: var(--navy); }
+    .guide-info p { font-size: 0.75rem; color: var(--gray-600); margin: 3px 0 6px 0; }
+    .tag-row { display: flex; gap: 6px; }
+    .tag { font-size: 0.65rem; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: var(--gray-100); color: var(--navy-light); }
+    .tag.sdg { background: #dcfce7; color: #166534; }
+    
+    /* Checklist Items */
+    .checklist-group { background: #fff; border: 1px solid var(--gray-200); border-radius: 10px; padding: 12px; }
+    .check-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 0.8rem;
+    }
+    .check-item:last-child { border-bottom: none; }
+    .check-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--navy);
+      font-weight: 500;
+    }
+    .check-box input { accent-color: var(--primary); width: 16px; height: 16px; }
+    .badge-saved { font-size: 0.7rem; color: var(--primary); font-weight: 700; background: var(--primary-light); padding: 2px 8px; border-radius: 4px; }
+    
+    /* Drive Item */
+    .drive-card {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .drive-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .drive-title { font-size: 0.9rem; font-weight: 700; color: var(--navy); }
+    .drive-status { background: #dbeafe; color: #1e40af; font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+    .drive-detail { font-size: 0.75rem; color: var(--gray-600); display: flex; flex-direction: column; gap: 2px; }
+    .btn-join {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+    }
+    
+    /* Estimator Form */
+    .estimator-box {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    .form-group label { font-size: 0.75rem; font-weight: 600; color: var(--navy-light); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .form-input {
+      border: 1px solid var(--gray-300);
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+    .result-banner {
+      background: var(--navy);
+      color: #fff;
+      border-radius: 8px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      text-align: center;
+      gap: 6px;
+    }
+    .res-val { font-size: 0.95rem; font-weight: 800; color: #34d399; }
+    .res-lbl { font-size: 0.65rem; color: #94a3b8; text-transform: uppercase; margin-top: 2px; }
+    .formula-ref { font-size: 0.68rem; color: var(--gray-600); background: var(--gray-100); padding: 6px 10px; border-radius: 6px; font-family: monospace; }
+    
+    /* Coordinator Console */
+    .console-box {
+      background: #fff;
+      border: 2px dashed #047857;
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .console-title { font-size: 0.85rem; font-weight: 800; color: var(--primary-dark); display: flex; justify-content: space-between; align-items: center; }
+    .btn-console {
+      background: var(--primary-light);
+      border: 1px solid var(--primary);
+      color: var(--primary-dark);
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Figma Board Bar -->
+  <div class="figma-header">
+    <div>
+      <h1>⚡ Community Renewable Energy Portal <span class="badge">Review 2 Wireframes</span></h1>
+      <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 4px;">Topic #40 • 5 Connected Mobile-First Screen Blueprints • Figma Compatible</p>
+    </div>
+    <div class="screen-pills">
+      <button class="screen-pill active" onclick="switchView('all')">View All (Figma Board)</button>
+      <button class="screen-pill" onclick="switchView('s1')">1. Hub (/)</button>
+      <button class="screen-pill" onclick="switchView('s2')">2. Practices</button>
+      <button class="screen-pill" onclick="switchView('s3')">3. Community</button>
+      <button class="screen-pill" onclick="switchView('s4')">4. Estimator</button>
+      <button class="screen-pill" onclick="switchView('s5')">5. Account</button>
+    </div>
+  </div>
+
+  <!-- Board Container -->
+  <div class="board-container" id="board">
+
+    <!-- Screen 1: Hub -->
+    <div class="screen-frame" id="frame-s1">
+      <div class="screen-meta">
+        <span>SCREEN 1</span>
+        <div>PATH: / (Public Awareness Hub)</div>
+      </div>
+      <div class="portal-nav">
+        <div class="portal-logo">☀️ C.R.E.A.M.</div>
+        <div class="portal-nav-actions">
+          <span class="lang-badge">🌐 English ▾</span>
+          <button class="btn-auth">Sign In</button>
+        </div>
+      </div>
+      <div class="screen-body">
+        <div class="hero-banner">
+          <h2>Empowering Communities Through Renewable Energy</h2>
+          <p>Explore verified practices, solar readiness guides, and join local community drives across regional languages.</p>
+          <div class="hero-actions">
+            <button class="btn-primary" onclick="switchView('s2')">Check Readiness ➔</button>
+            <button class="btn-secondary" onclick="switchView('s3')">Local Drives</button>
+          </div>
+        </div>
+
+        <div class="metric-strip">
+          <div class="metric-item"><div class="val">124</div><div class="lbl">Members</div></div>
+          <div class="metric-item"><div class="val">418</div><div class="lbl">Habits</div></div>
+          <div class="metric-item"><div class="val">87</div><div class="lbl">Pledges</div></div>
+          <div class="metric-item"><div class="val">340</div><div class="lbl">Attendees</div></div>
+        </div>
+
+        <div class="card-grid">
+          <div class="guide-card">
+            <div class="guide-icon">☀️</div>
+            <div class="guide-info">
+              <h3>Rooftop Solar Assessment</h3>
+              <p>Step-by-step shadow analysis, space requirement, and net metering.</p>
+              <div class="tag-row"><span class="tag">Solar</span><span class="tag sdg">SDG 7</span></div>
+            </div>
+          </div>
+          <div class="guide-card">
+            <div class="guide-icon">♻️</div>
+            <div class="guide-info">
+              <h3>Community Biogas & Waste</h3>
+              <p>Turn kitchen wet waste into clean cooking gas and organic compost.</p>
+              <div class="tag-row"><span class="tag">Biogas</span><span class="tag sdg">SDG 11</span></div>
+            </div>
+          </div>
+          <div class="guide-card">
+            <div class="guide-icon">🌿</div>
+            <div class="guide-info">
+              <h3>Clean Cooking & Biomass</h3>
+              <p>Conserving forest biomass through improved thermal cookstoves.</p>
+              <div class="tag-row"><span class="tag">Cooking</span><span class="tag sdg">SDG 15</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 2: Practices -->
+    <div class="screen-frame" id="frame-s2">
+      <div class="screen-meta">
+        <span>SCREEN 2</span>
+        <div>PATH: /practices (Readiness & Pledges)</div>
+      </div>
+      <div class="portal-nav">
+        <div class="portal-logo">☀️ C.R.E.A.M.</div>
+        <div class="portal-nav-actions">
+          <span class="lang-badge">🌐 English ▾</span>
+          <button class="btn-auth">Kotresh ▾</button>
+        </div>
+      </div>
+      <div class="screen-body">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h2 style="font-size: 1rem; color: var(--navy); font-weight: 700;">Household Readiness Checklist</h2>
+          <span style="font-size: 0.75rem; color: var(--primary); font-weight: 600;">3 of 5 Done</span>
+        </div>
+
+        <div class="checklist-group">
+          <div class="check-item">
+            <div class="check-box"><input type="checkbox" checked> <span>Check shade-free roof (9 AM - 3 PM)</span></div>
+            <span class="badge-saved">Saved</span>
+          </div>
+          <div class="check-item">
+            <div class="check-box"><input type="checkbox" checked> <span>Switch living room to 9W LEDs</span></div>
+            <span class="badge-saved">Saved</span>
+          </div>
+          <div class="check-item">
+            <div class="check-box"><input type="checkbox" checked> <span>Segregate household kitchen wet waste</span></div>
+            <span class="badge-saved">Saved</span>
+          </div>
+          <div class="check-item">
+            <div class="check-box"><input type="checkbox"> <span>Inspect solar water heater glass</span></div>
+            <button class="btn-primary" style="background: var(--navy); color: #fff; font-size: 0.65rem;">Save</button>
+          </div>
+          <div class="check-item">
+            <div class="check-box"><input type="checkbox"> <span>Measure peak monthly kWh bill</span></div>
+            <button class="btn-primary" style="background: var(--navy); color: #fff; font-size: 0.65rem;">Save</button>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+          <h2 style="font-size: 1rem; color: var(--navy); font-weight: 700;">My Adoption Pledges</h2>
+          <button class="btn-primary" style="background: var(--primary); color: #fff; font-size: 0.7rem;">+ New Pledge</button>
+        </div>
+
+        <div class="checklist-group">
+          <div style="padding: 6px 0;">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="font-size: 0.82rem; font-weight: 700; color: var(--navy);">Adopt 2kW Rooftop Solar</span>
+              <span style="font-size: 0.68rem; background: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 4px; font-weight: 700;">In Progress</span>
+            </div>
+            <p style="font-size: 0.72rem; color: var(--gray-600); margin-top: 3px;">Applied for KREDL subsidy scheme on portal.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 3: Community Drives -->
+    <div class="screen-frame" id="frame-s3">
+      <div class="screen-meta">
+        <span>SCREEN 3</span>
+        <div>PATH: /community (Drives & Notices)</div>
+      </div>
+      <div class="portal-nav">
+        <div class="portal-logo">☀️ C.R.E.A.M.</div>
+        <div class="portal-nav-actions">
+          <span class="lang-badge">🌐 English ▾</span>
+          <button class="btn-auth">Coordinator ▾</button>
+        </div>
+      </div>
+      <div class="screen-body">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h2 style="font-size: 1rem; color: var(--navy); font-weight: 700;">Upcoming Awareness Drives</h2>
+          <span style="font-size: 0.75rem; color: var(--primary); font-weight: 600;">2 Drives Near You</span>
+        </div>
+
+        <div class="drive-card">
+          <div class="drive-header">
+            <div class="drive-title">Ward Solar & Energy Saving Workshop</div>
+            <span class="drive-status">Upcoming</span>
+          </div>
+          <div class="drive-detail">
+            <div>📍 Community Center, Ward 14</div>
+            <div>📅 Saturday, 10:00 AM - 1:00 PM</div>
+            <div>👥 42 Residents Registered</div>
+          </div>
+          <button class="btn-join">Join This Awareness Drive</button>
+        </div>
+
+        <div class="drive-card">
+          <div class="drive-header">
+            <div class="drive-title">Biogas Composting Practical Demo</div>
+            <span class="drive-status">Upcoming</span>
+          </div>
+          <div class="drive-detail">
+            <div>📍 Gram Panchayat Ground</div>
+            <div>📅 Next Wednesday, 4:00 PM</div>
+            <div>👥 28 Residents Registered</div>
+          </div>
+          <button class="btn-join">Join This Awareness Drive</button>
+        </div>
+
+        <div class="checklist-group" style="margin-top: 6px;">
+          <h3 style="font-size: 0.82rem; font-weight: 700; color: var(--navy); margin-bottom: 6px;">📢 Community Notices</h3>
+          <p style="font-size: 0.75rem; color: var(--navy-light);"><strong>KREDL Subsidy Update:</strong> Government portal now accepting new rooftop applications without fee.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 4: Impact Estimator -->
+    <div class="screen-frame" id="frame-s4">
+      <div class="screen-meta">
+        <span>SCREEN 4</span>
+        <div>PATH: /estimator (Impact Helper)</div>
+      </div>
+      <div class="portal-nav">
+        <div class="portal-logo">☀️ C.R.E.A.M.</div>
+        <div class="portal-nav-actions">
+          <span class="lang-badge">🌐 English ▾</span>
+          <button class="btn-auth">Sign In</button>
+        </div>
+      </div>
+      <div class="screen-body">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h2 style="font-size: 1rem; color: var(--navy); font-weight: 700;">Practice Impact Calculator</h2>
+          <span style="font-size: 0.7rem; background: #e0e7ff; color: #3730a3; padding: 2px 6px; border-radius: 4px; font-weight: 600;">Stateless Helper</span>
+        </div>
+
+        <div class="estimator-box">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Old Wattage (W)</label>
+              <input type="number" class="form-input" value="60">
+            </div>
+            <div class="form-group">
+              <label>New LED Wattage (W)</label>
+              <input type="number" class="form-input" value="9">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Bulb Quantity</label>
+              <input type="number" class="form-input" value="6">
+            </div>
+            <div class="form-group">
+              <label>Hours / Day</label>
+              <input type="number" class="form-input" value="5">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Days / Month</label>
+              <input type="number" class="form-input" value="30">
+            </div>
+            <div class="form-group">
+              <label>Tariff (₹/kWh)</label>
+              <input type="number" class="form-input" value="6.50">
+            </div>
+          </div>
+          <button class="btn-primary" style="background: var(--primary); color: #fff; padding: 9px; font-size: 0.8rem; margin-top: 4px;">Recalculate Savings</button>
+        </div>
+
+        <div class="result-banner">
+          <div><div class="res-val">45.9</div><div class="res-lbl">kWh / Mo Saved</div></div>
+          <div><div class="res-val">₹298</div><div class="res-lbl">Monthly Saved</div></div>
+          <div><div class="res-val">37.6</div><div class="res-lbl">kg CO2 Avoided</div></div>
+        </div>
+
+        <div class="formula-ref">
+          📐 Formula: ((60W - 9W) × 6 qty × 5h × 30d) / 1000 = 45.9 kWh<br>
+          🌱 CO2 Factor: 45.9 kWh × 0.82 kg/kWh (CEA standard)
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 5: Account & Console -->
+    <div class="screen-frame" id="frame-s5">
+      <div class="screen-meta">
+        <span>SCREEN 5</span>
+        <div>PATH: /account (Sign In & Console)</div>
+      </div>
+      <div class="portal-nav">
+        <div class="portal-logo">☀️ C.R.E.A.M.</div>
+        <div class="portal-nav-actions">
+          <span class="lang-badge">🌐 English ▾</span>
+          <button class="btn-auth" style="background: #dc2626;">Sign Out</button>
+        </div>
+      </div>
+      <div class="screen-body">
+        <div style="background: #fff; border: 1px solid var(--gray-200); border-radius: 10px; padding: 14px; display: flex; gap: 12px; align-items: center;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: #047857; color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem;">K</div>
+          <div>
+            <div style="font-size: 0.95rem; font-weight: 700; color: var(--navy);">Kotresh V.</div>
+            <div style="font-size: 0.72rem; color: var(--gray-600);">veerkotresh@gmail.com • Ward 14</div>
+            <div style="margin-top: 4px;"><span style="font-size: 0.65rem; background: #dcfce7; color: #15803d; font-weight: 800; padding: 2px 6px; border-radius: 4px;">ROLE: COORDINATOR</span></div>
+          </div>
+        </div>
+
+        <!-- Coordinator Console -->
+        <div class="console-box">
+          <div class="console-title">
+            <span>🛡️ COORDINATOR CONSOLE</span>
+            <span style="font-size: 0.65rem; color: var(--primary);">Verified Access</span>
+          </div>
+          <button class="btn-console">📅 + Schedule New Community Drive</button>
+          <button class="btn-console">📢 + Post Community Notice / Update</button>
+          <button class="btn-console">👥 Promote Active Member to Coordinator</button>
+          <button class="btn-console">📊 Export Drive Attendance Report (CSV)</button>
+        </div>
+
+        <div style="background: #fff; border: 1px solid var(--gray-200); border-radius: 10px; padding: 12px;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--navy); margin-bottom: 6px;">Language Preference</div>
+          <div style="display: flex; gap: 6px;">
+            <span class="tag" style="background: var(--primary); color: white;">English</span>
+            <span class="tag">ಕನ್ನಡ (Kannada)</span>
+            <span class="tag">हिंदी (Hindi)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function switchView(target) {
+      document.querySelectorAll('.screen-pill').forEach(btn => btn.classList.remove('active'));
+      const board = document.getElementById('board');
+      const frames = document.querySelectorAll('.screen-frame');
+
+      if (target === 'all') {
+        board.classList.remove('single-view');
+        frames.forEach(f => f.style.display = 'flex');
+        event.target.classList.add('active');
+      } else {
+        board.classList.add('single-view');
+        frames.forEach(f => {
+          if (f.id === 'frame-' + target) {
+            f.style.display = 'flex';
+          } else {
+            f.style.display = 'none';
+          }
+        });
+        event.target.classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>
+
